@@ -212,9 +212,11 @@ class Checks(object):
 
 	def freebufwaits(self):
 		'''Free buffer waits'''
-		sql = "select to_char(time_waited, 'FM99999999999999990') retvalue \
-	             from v$system_event se, v$event_name en \
-	             where se.event(+) = en.name and en.name = 'free buffer waits'"
+		sql = """
+select  nvl (to_char(time_waited, 'FM99999999999999990'), 0 )  retvalue , name
+from v$system_event se, v$event_name en 
+where se.event(+) = en.name and en.name = 'free buffer waits'
+"""
 		self.cur.execute(sql)
 		res = self.cur.fetchall()
 		for i in res:
