@@ -375,7 +375,7 @@ where se.event(+) = en.name and en.name = 'free buffer waits'
 
 	def check_archive(self,archive):
 		'''List archive used'''
-		sql = "SELECT  ROUND ((FREE_MB/TOTAL_MB*100) * 10 ,0)   PERCENTUAL FROM V$ASM_DISKGROUP where name='{0}'".format(archive)
+		sql = "SELECT  ROUND (((TOTAL_MB-FREE_MB)/TOTAL_MB*100)  ,0)   PERCENTUAL  FROM V$ASM_DISKGROUP where name='{0}'".format(archive)
 		self.cur.execute(sql)
 		res = self.cur.fetchall()
 		for i in res:
