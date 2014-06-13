@@ -434,7 +434,7 @@ where se.event(+) = en.name and en.name = 'free buffer waits'
 
 	def tablespace_temp(self,name):
 		'''Query temporary tablespaces'''
-		sql = '''SELECT round(sum(a.blocks*8192)*100/bytes,2) percentual FROM V$TEMPSEG_USAGE a, dba_temp_files b where tablespace_name='{0}' and a.tablespace=b.tablespace_name group by a.tablespace,b.bytes'''.format(name)
+		sql = '''SELECT round(sum(a.blocks*8192)*100/sum(bytes),2) percentual FROM V$TEMPSEG_USAGE a, dba_temp_files b where tablespace_name='{0}' and a.tablespace=b.tablespace_name group by a.tablespace'''.format(name)
 		self.cur.execute(sql)
 		res = self.cur.fetchall()
 		for i in res:
