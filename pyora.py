@@ -408,6 +408,14 @@ where se.event(+) = en.name and en.name = 'free buffer waits'
 		for i in res:
 			print i[0]
 
+    def exception_log(self):
+        '''Exception Log'''
+        sql = "SELECT count(rowid) FROM SYSTEM.EXCEPTION_LOG"
+        self.cur.execute(sql)
+        res = self.cur.fetchall()
+        for i in res:
+            print i[0]
+
 	def query_redologs(self):
 		'''Redo logs'''
 		sql = "select COUNT(*) from v$LOG WHERE STATUS='ACTIVE'"
